@@ -146,7 +146,7 @@ header {
 <body>
 
 <div id="configBanner" class="config-banner">
-  ⚠ PROXY_URL is not configured yet — see <code>seo-engine/DEPLOY.md</code> to wire this page up to a live backend before running any phase.
+  ⚠ No Anthropic API key set yet — click <strong>Set API Key</strong> in the header to enter yours (stored only in this browser, never saved to the repo).
 </div>
 
 <header>
@@ -166,6 +166,7 @@ header {
       <span>Auto-chain</span>
       <div id="toggle" class="toggle" style="background:#2A2A2A;border:1px solid #444"><div class="toggle-dot" style="left:2px"></div></div>
     </div>
+    <button id="apiKeyBtn" class="runall-btn" style="width:auto;padding:6px 14px;font-size:10px;">SET API KEY</button>
   </div>
 </header>
 
@@ -209,13 +210,20 @@ header {
 /*
  * SAPS Police Clearance NZ — SEO Automation Engine
  *
- * This page never talks to the Anthropic API directly (an API key in
- * browser JS is visible to anyone via devtools/network tab). Instead it
- * calls PROXY_URL, a small server-side proxy that holds the key.
- * See seo-engine/worker.js + seo-engine/DEPLOY.md to deploy that proxy
- * and fill in the URL below.
+ * Runs locally from your own Anthropic account: you paste your API key
+ * once (stored only in this browser's localStorage, never written to
+ * disk or committed to the repo), and phases call api.anthropic.com
+ * directly. Anyone who opens devtools on YOUR machine while the key is
+ * saved could read it from localStorage, so only use this on a device
+ * you control — don't share this page's URL publicly with the key set.
+ *
+ * Prefer not to keep a key in the browser at all? seo-engine/worker.js +
+ * DEPLOY.md describe an alternative server-side proxy setup; not required
+ * for this local, single-user flow.
  */
-const PROXY_URL = ""; // e.g. "https://saps-seo-proxy.<your-account>.workers.dev"
+const API_KEY_STORAGE_KEY = "saps_seo_engine_anthropic_key";
+function getApiKey() { return localStorage.getItem(API_KEY_STORAGE_KEY) || ""; }
+function setApiKey(key) { localStorage.setItem(API_KEY_STORAGE_KEY, key); }
 
 const PHASES = [
   {
@@ -408,11 +416,31 @@ const runAllBtn = document.getElementById("runAllBtn");
 const toggleEl = document.getElementById("toggle");
 const configBanner = document.getElementById("configBanner");
 const layoutEl = document.getElementById("layout");
+const apiKeyBtn = document.getElementById("apiKeyBtn");
 
-if (!PROXY_URL) {
-  configBanner.classList.add("show");
-  layoutEl.classList.add("banner-open");
+function refreshConfigBanner() {
+  if (!getApiKey()) {
+    configBanner.classList.add("show");
+    layoutEl.classList.add("banner-open");
+  } else {
+    configBanner.classList.remove("show");
+    layoutEl.classList.remove("banner-open");
+  }
 }
+refreshConfigBanner();
+
+apiKeyBtn.onclick = () => {
+  const existing = getApiKey();
+  const entered = window.prompt(
+    existing ? "Update your Anthropic API key (leave blank to keep current):" : "Paste your Anthropic API key (from console.anthropic.com → API Keys):",
+    ""
+  );
+  if (entered === null) return;
+  if (entered.trim() === "") { if (!existing) return; }
+  else setApiKey(entered.trim());
+  refreshConfigBanner();
+  addTermLine(getApiKey() ? "API key saved to this browser." : "No API key set.", getApiKey() ? "ok" : "err");
+};
 
 function addTermLine(text, type) {
   const line = document.createElement("div");
@@ -426,7 +454,7 @@ function addTermLine(text, type) {
 addTermLine("SAPS Police Clearance NZ — SEO Engine v1.0 ready", "ok");
 addTermLine("Session: " + new Date().toISOString().slice(0, 19).replace("T", " ") + " NZST", "info");
 addTermLine("Select a phase to execute. Phases unlock sequentially after completion.", "info");
-addTermLine(PROXY_URL ? "Backend proxy configured." : "Backend proxy NOT configured — see seo-engine/DEPLOY.md", PROXY_URL ? "ok" : "err");
+addTermLine(getApiKey() ? "API key found in this browser." : "No API key set — click SET API KEY above.", getApiKey() ? "ok" : "err");
 
 function isPhaseAvailable(phaseId) {
   const idx = PHASES.findIndex(p => p.id === phaseId);
@@ -544,9 +572,10 @@ async function runPhase(phaseId) {
   const phase = PHASES.find(p => p.id === phaseId);
   if (!phase || streaming) return;
 
-  if (!PROXY_URL) {
-    addTermLine("Cannot run " + phase.id + " — PROXY_URL is not configured.", "err");
-    addTermLine("Deploy the backend proxy first (see seo-engine/DEPLOY.md), then set PROXY_URL at the top of this file.", "info");
+  const apiKey = getApiKey();
+  if (!apiKey) {
+    addTermLine("Cannot run " + phase.id + " — no API key set.", "err");
+    addTermLine("Click SET API KEY in the header and paste your Anthropic key.", "info");
     return;
   }
 
@@ -558,18 +587,29 @@ async function runPhase(phaseId) {
   outputTitleEl.textContent = phase.id + " — " + phase.label;
 
   addTermLine('execute ' + phase.id + ' — "' + phase.label + '"', "cmd");
-  addTermLine("Sending prompt to proxy...", "info");
+  addTermLine("Sending prompt to Claude API...", "info");
 
   try {
-    const res = await fetch(PROXY_URL, {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt: phase.prompt }),
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true",
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 2000,
+        stream: true,
+        system: "You are a world-class SEO strategist and technical specialist. Produce structured, actionable, deployment-ready outputs. Use markdown headers, code blocks, and tables where they add clarity. Be specific — give real code, real URLs, real specifications. Never pad with generic advice.",
+        messages: [{ role: "user", content: phase.prompt }],
+      }),
     });
 
     if (!res.ok) {
       const err = await res.text();
-      addTermLine("Proxy error: " + res.status, "err");
+      addTermLine("API error: " + res.status, "err");
       addTermLine(err.slice(0, 200), "err");
       streaming = false;
       activePhase = null;
