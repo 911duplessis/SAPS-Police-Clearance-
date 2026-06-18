@@ -31,17 +31,15 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:var(--ink); color:var(--cream); font-family:var(--f-body); }
 
-/* ── CONFIG NOTICE ── */
-.config-banner {
+/* ── INFO BANNER ── */
+.info-banner {
   background: var(--gold-4);
   color: var(--navy);
   font-family: var(--f-mono);
   font-size: 11.5px;
   padding: 8px 20px;
   text-align: center;
-  display: none;
 }
-.config-banner.show { display: block; }
 
 /* ── HEADER ── */
 header {
@@ -63,13 +61,11 @@ header {
 .progress-track { background:var(--navy); border-radius:2px; height:4px; }
 .progress-fill { height:100%; border-radius:2px; background:linear-gradient(90deg,var(--gold),var(--gold-3)); transition:width .5s ease; }
 
-.autochain { display:flex; align-items:center; gap:8px; font-size:10px; letter-spacing:.08em; text-transform:uppercase; font-family:var(--f-mono); }
-.toggle { width:36px; height:18px; border-radius:9px; cursor:pointer; position:relative; transition:all .2s; }
-.toggle-dot { width:12px; height:12px; border-radius:50%; background:#fff; position:absolute; top:2px; transition:left .2s; }
+.claude-link { display:inline-block; padding:7px 14px; border-radius:3px; border:1px solid var(--gold); color:var(--gold-3); text-decoration:none; font-weight:800; font-size:10px; letter-spacing:.1em; text-transform:uppercase; font-family:var(--f-mono); }
+.claude-link:hover { background:rgba(200,132,26,.12); }
 
 /* ── LAYOUT ── */
-.layout { display:flex; height:calc(100vh - 56px); overflow:hidden; }
-.layout.banner-open { height:calc(100vh - 56px - 34px); }
+.layout { display:flex; height:calc(100vh - 56px - 34px); overflow:hidden; }
 
 /* sidebar */
 .sidebar { width:280px; flex-shrink:0; background:var(--navy); border-right:1px solid var(--navy-3); display:flex; flex-direction:column; overflow:hidden; }
@@ -78,7 +74,7 @@ header {
 
 .phase-card { border:1px solid var(--navy-3); border-left:3px solid var(--navy-3); border-radius:3px; padding:14px 16px; background:var(--navy-2); cursor:pointer; transition:all .2s; }
 .phase-card.locked { opacity:.4; cursor:default; }
-.phase-card.active { border-color:var(--gold); border-left-color:var(--gold); box-shadow:0 0 0 2px rgba(200,132,26,.25), 0 0 20px rgba(200,132,26,.15); cursor:default; }
+.phase-card.active { border-color:var(--gold); border-left-color:var(--gold); box-shadow:0 0 0 2px rgba(200,132,26,.25), 0 0 20px rgba(200,132,26,.15); }
 .phase-card.complete { border-left-color:var(--green); }
 .pc-row { display:flex; justify-content:space-between; align-items:center; }
 .pc-left { display:flex; align-items:center; gap:10px; }
@@ -93,26 +89,36 @@ header {
 .phase-card.active .pc-status { background:rgba(200,132,26,.15); color:var(--gold-3); border-color:var(--gold); }
 .phase-card.complete .pc-status { background:rgba(37,211,102,.15); color:var(--green); border-color:var(--green); }
 
-.runall-wrap { padding:12px; border-top:1px solid var(--navy-3); }
-.runall-btn { width:100%; padding:10px 0; border-radius:3px; border:1px solid var(--gold); background:linear-gradient(135deg,var(--navy-2),rgba(200,132,26,.15)); color:var(--gold-3); font-weight:800; font-size:11px; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; font-family:var(--f-mono); }
-.runall-btn:disabled { color:var(--muted); border-color:var(--navy-3); background:var(--navy-2); cursor:not-allowed; }
+.sidebar-foot { padding:14px 16px; border-top:1px solid var(--navy-3); font-size:10.5px; color:var(--muted); line-height:1.6; font-family:var(--f-mono); }
 
 /* output pane */
 .output-col { flex:1; display:flex; flex-direction:column; overflow:hidden; }
 .output-hdr { background:var(--navy-2); border-bottom:1px solid var(--navy-3); padding:10px 20px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
 .output-hdr-title { font-size:10px; font-weight:700; letter-spacing:.12em; color:var(--gold-3); text-transform:uppercase; font-family:var(--f-mono); }
-.output-hdr-meta { display:flex; gap:16px; font-size:9px; color:var(--muted); letter-spacing:.08em; font-family:var(--f-mono); }
 .output-scroll { flex:1; overflow:auto; padding:20px 24px; background:var(--ink); }
 .empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:var(--navy-4); text-align:center; }
 .empty-state .icon { font-size:42px; margin-bottom:16px; }
 .empty-state .t1 { font-size:14px; font-family:var(--f-mono); color:var(--muted); letter-spacing:.05em; }
 .empty-state .t2 { font-size:11px; color:var(--navy-4); margin-top:8px; font-family:var(--f-mono); }
 
+/* manual workflow panel */
+.work-panel { margin-bottom:32px; }
+.work-step { margin-bottom:18px; }
+.work-step-label { font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-3); margin-bottom:8px; font-family:var(--f-mono); }
+.prompt-box { background:#04080F; border:1px solid var(--navy-3); border-radius:4px; padding:14px 16px; font-family:var(--f-mono); font-size:11.5px; color:#C8C8C8; white-space:pre-wrap; line-height:1.6; max-height:260px; overflow:auto; margin-bottom:10px; }
+.btn { padding:9px 16px; border-radius:3px; border:1px solid var(--gold); background:linear-gradient(135deg,var(--navy-2),rgba(200,132,26,.15)); color:var(--gold-3); font-weight:800; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; font-family:var(--f-mono); margin-right:8px; }
+.btn:hover { background:rgba(200,132,26,.22); }
+.btn.secondary { border-color:var(--navy-4); color:var(--muted-2); background:var(--navy-2); }
+.btn.secondary:hover { background:var(--navy-3); }
+.paste-area { width:100%; min-height:180px; background:#04080F; border:1px solid var(--navy-3); border-radius:4px; padding:12px 14px; font-family:var(--f-mono); font-size:11.5px; color:#C8C8C8; resize:vertical; margin-bottom:10px; }
+.paste-area:focus { outline:none; border-color:var(--gold); }
+
 .result-block { margin-bottom:40px; }
 .result-hdr { display:flex; align-items:center; gap:12px; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--navy-3); }
 .result-dot { width:6px; height:6px; background:var(--gold); border-radius:50%; }
 .result-title { font-family:var(--f-mono); font-weight:800; font-size:12px; color:var(--gold-3); letter-spacing:.1em; text-transform:uppercase; }
 .result-done { font-size:9px; color:var(--green); margin-left:auto; letter-spacing:.1em; font-family:var(--f-mono); }
+.result-edit { font-size:9px; color:var(--muted-2); margin-left:12px; letter-spacing:.1em; font-family:var(--f-mono); cursor:pointer; text-decoration:underline; }
 .md-h1 { color:#fff; font-weight:900; font-size:16px; margin-top:24px; margin-bottom:10px; font-family:var(--f-mono); }
 .md-h2 { color:var(--gold-3); font-weight:800; font-size:14px; margin-top:20px; margin-bottom:8px; border-bottom:1px solid rgba(200,132,26,.3); padding-bottom:4px; font-family:var(--f-mono); }
 .md-h3 { color:var(--gold-4); font-weight:700; font-size:13px; margin-top:16px; margin-bottom:6px; font-family:var(--f-mono); }
@@ -122,7 +128,6 @@ header {
 .md-table { color:#aaa; font-size:11px; font-family:var(--f-mono); line-height:1.6; border-left:2px solid var(--navy-3); padding-left:8px; }
 .md-bold { color:var(--gold-4); font-weight:700; font-size:12px; font-family:var(--f-mono); margin-top:6px; }
 .md-p { color:#D0D0D0; font-size:12px; line-height:1.7; font-family:var(--f-mono); }
-.cursor { display:inline-block; width:8px; height:14px; background:var(--gold); margin-left:2px; vertical-align:middle; }
 
 /* terminal */
 .terminal { width:280px; flex-shrink:0; background:#04080F; border-left:1px solid var(--navy-3); display:flex; flex-direction:column; overflow:hidden; }
@@ -136,7 +141,6 @@ header {
 .term-ok { color:var(--green); }
 .term-err { color:var(--red); }
 .term-info { color:#8BB4FF; }
-.term-prefix { margin-right:8px; }
 
 @media (max-width: 900px) {
   .sidebar, .terminal { width: 220px; }
@@ -145,8 +149,8 @@ header {
 </head>
 <body>
 
-<div id="configBanner" class="config-banner">
-  ⚠ No Anthropic API key set yet — click <strong>Set API Key</strong> in the header to enter yours (stored only in this browser, never saved to the repo).
+<div class="info-banner">
+  Manual mode — no API key needed. Copy each phase's prompt, paste it into claude.ai (free), then paste the answer back in.
 </div>
 
 <header>
@@ -162,11 +166,7 @@ header {
       <div class="progress-labels"><span class="l1">ROLLOUT PROGRESS</span><span class="l2" id="progressLabel">0/6 PHASES</span></div>
       <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
     </div>
-    <div class="autochain">
-      <span>Auto-chain</span>
-      <div id="toggle" class="toggle" style="background:#2A2A2A;border:1px solid #444"><div class="toggle-dot" style="left:2px"></div></div>
-    </div>
-    <button id="apiKeyBtn" class="runall-btn" style="width:auto;padding:6px 14px;font-size:10px;">SET API KEY</button>
+    <a class="claude-link" href="https://claude.ai/new" target="_blank" rel="noopener">Open claude.ai ↗</a>
   </div>
 </header>
 
@@ -174,21 +174,18 @@ header {
   <div class="sidebar">
     <div class="sidebar-label">Execution Phases</div>
     <div class="phase-list" id="phaseList"></div>
-    <div class="runall-wrap">
-      <button class="runall-btn" id="runAllBtn">▶ RUN ALL PHASES</button>
-    </div>
+    <div class="sidebar-foot">Click a phase, copy its prompt, paste into claude.ai, then paste the reply back here to mark it complete.</div>
   </div>
 
   <div class="output-col">
     <div class="output-hdr">
       <div class="output-hdr-title" id="outputTitle">OUTPUT</div>
-      <div class="output-hdr-meta" id="outputMeta"></div>
     </div>
     <div class="output-scroll" id="outputScroll">
       <div class="empty-state" id="emptyState">
         <div class="icon">⚡</div>
-        <div class="t1">Select a phase to execute</div>
-        <div class="t2">or click RUN ALL PHASES to chain all six</div>
+        <div class="t1">Select a phase to get started</div>
+        <div class="t2">copy the prompt, run it in claude.ai, paste the answer back</div>
       </div>
     </div>
   </div>
@@ -208,22 +205,13 @@ header {
 
 <script>
 /*
- * SAPS Police Clearance NZ — SEO Automation Engine
+ * SAPS Police Clearance NZ — SEO Automation Engine (manual mode)
  *
- * Runs locally from your own Anthropic account: you paste your API key
- * once (stored only in this browser's localStorage, never written to
- * disk or committed to the repo), and phases call api.anthropic.com
- * directly. Anyone who opens devtools on YOUR machine while the key is
- * saved could read it from localStorage, so only use this on a device
- * you control — don't share this page's URL publicly with the key set.
- *
- * Prefer not to keep a key in the browser at all? seo-engine/worker.js +
- * DEPLOY.md describe an alternative server-side proxy setup; not required
- * for this local, single-user flow.
+ * No API key, no backend, no cost. Each phase shows its prompt with a
+ * Copy button; you paste it into the free claude.ai chat yourself, then
+ * paste Claude's reply back into the textarea here to render and save it.
+ * Everything is kept in memory only (refreshing the page clears progress).
  */
-const API_KEY_STORAGE_KEY = "saps_seo_engine_anthropic_key";
-function getApiKey() { return localStorage.getItem(API_KEY_STORAGE_KEY) || ""; }
-function setApiKey(key) { localStorage.setItem(API_KEY_STORAGE_KEY, key); }
 
 const PHASES = [
   {
@@ -401,46 +389,14 @@ All recommendations must account for New Zealand Privacy Act 2020 compliance (no
 let activePhase = null;
 let completedPhases = new Set();
 let outputs = {};
-let streaming = false;
-let autoChain = false;
 
 const phaseListEl = document.getElementById("phaseList");
 const termBodyEl = document.getElementById("termBody");
 const outputScrollEl = document.getElementById("outputScroll");
 const emptyStateEl = document.getElementById("emptyState");
 const outputTitleEl = document.getElementById("outputTitle");
-const outputMetaEl = document.getElementById("outputMeta");
 const progressFillEl = document.getElementById("progressFill");
 const progressLabelEl = document.getElementById("progressLabel");
-const runAllBtn = document.getElementById("runAllBtn");
-const toggleEl = document.getElementById("toggle");
-const configBanner = document.getElementById("configBanner");
-const layoutEl = document.getElementById("layout");
-const apiKeyBtn = document.getElementById("apiKeyBtn");
-
-function refreshConfigBanner() {
-  if (!getApiKey()) {
-    configBanner.classList.add("show");
-    layoutEl.classList.add("banner-open");
-  } else {
-    configBanner.classList.remove("show");
-    layoutEl.classList.remove("banner-open");
-  }
-}
-refreshConfigBanner();
-
-apiKeyBtn.onclick = () => {
-  const existing = getApiKey();
-  const entered = window.prompt(
-    existing ? "Update your Anthropic API key (leave blank to keep current):" : "Paste your Anthropic API key (from console.anthropic.com → API Keys):",
-    ""
-  );
-  if (entered === null) return;
-  if (entered.trim() === "") { if (!existing) return; }
-  else setApiKey(entered.trim());
-  refreshConfigBanner();
-  addTermLine(getApiKey() ? "API key saved to this browser." : "No API key set.", getApiKey() ? "ok" : "err");
-};
 
 function addTermLine(text, type) {
   const line = document.createElement("div");
@@ -451,10 +407,9 @@ function addTermLine(text, type) {
   termBodyEl.scrollTop = termBodyEl.scrollHeight;
 }
 
-addTermLine("SAPS Police Clearance NZ — SEO Engine v1.0 ready", "ok");
+addTermLine("SAPS Police Clearance NZ — SEO Engine (manual mode) ready", "ok");
 addTermLine("Session: " + new Date().toISOString().slice(0, 19).replace("T", " ") + " NZST", "info");
-addTermLine("Select a phase to execute. Phases unlock sequentially after completion.", "info");
-addTermLine(getApiKey() ? "API key found in this browser." : "No API key set — click SET API KEY above.", getApiKey() ? "ok" : "err");
+addTermLine("No API key needed. Copy a prompt, run it in claude.ai, paste the answer back.", "info");
 
 function isPhaseAvailable(phaseId) {
   const idx = PHASES.findIndex(p => p.id === phaseId);
@@ -477,47 +432,118 @@ function renderMarkdownLine(line) {
   return div;
 }
 
+function showWorkPanel(phase) {
+  outputScrollEl.innerHTML = "";
+  outputTitleEl.textContent = phase.id + " — " + phase.label;
+
+  const panel = document.createElement("div");
+  panel.className = "work-panel";
+
+  const step1Label = document.createElement("div");
+  step1Label.className = "work-step-label";
+  step1Label.textContent = "Step 1 — Copy this prompt";
+  const promptBox = document.createElement("div");
+  promptBox.className = "prompt-box";
+  promptBox.textContent = phase.prompt;
+  const copyBtn = document.createElement("button");
+  copyBtn.className = "btn";
+  copyBtn.textContent = "Copy Prompt";
+  copyBtn.onclick = () => {
+    navigator.clipboard.writeText(phase.prompt).then(() => {
+      addTermLine("Prompt copied for " + phase.id + ".", "ok");
+      copyBtn.textContent = "Copied ✓";
+      setTimeout(() => { copyBtn.textContent = "Copy Prompt"; }, 1500);
+    }).catch(() => addTermLine("Couldn't copy automatically — select the text above manually.", "err"));
+  };
+  const openBtn = document.createElement("a");
+  openBtn.className = "btn secondary";
+  openBtn.textContent = "Open claude.ai ↗";
+  openBtn.href = "https://claude.ai/new";
+  openBtn.target = "_blank";
+  openBtn.rel = "noopener";
+  openBtn.style.textDecoration = "none";
+  openBtn.style.display = "inline-block";
+
+  const step1 = document.createElement("div");
+  step1.className = "work-step";
+  step1.appendChild(step1Label);
+  step1.appendChild(promptBox);
+  step1.appendChild(copyBtn);
+  step1.appendChild(openBtn);
+
+  const step2Label = document.createElement("div");
+  step2Label.className = "work-step-label";
+  step2Label.textContent = "Step 2 — Paste Claude's reply here";
+  const textarea = document.createElement("textarea");
+  textarea.className = "paste-area";
+  textarea.placeholder = "Paste the full response from claude.ai...";
+  textarea.value = outputs[phase.id] || "";
+  const saveBtn = document.createElement("button");
+  saveBtn.className = "btn";
+  saveBtn.textContent = "Save Response";
+  saveBtn.onclick = () => {
+    const val = textarea.value.trim();
+    if (!val) { addTermLine("Nothing to save — paste a response first.", "err"); return; }
+    outputs[phase.id] = val;
+    completedPhases.add(phase.id);
+    addTermLine(phase.id + " saved — marked complete.", "ok");
+    activePhase = null;
+    renderPhaseList();
+    renderOutputs();
+  };
+
+  const step2 = document.createElement("div");
+  step2.className = "work-step";
+  step2.appendChild(step2Label);
+  step2.appendChild(textarea);
+  step2.appendChild(saveBtn);
+
+  panel.appendChild(step1);
+  panel.appendChild(step2);
+  outputScrollEl.appendChild(panel);
+
+  if (outputs[phase.id]) {
+    appendSavedResult(phase);
+  }
+}
+
+function appendSavedResult(p) {
+  const block = document.createElement("div");
+  block.className = "result-block";
+
+  const hdr = document.createElement("div");
+  hdr.className = "result-hdr";
+  const dot = document.createElement("div");
+  dot.className = "result-dot";
+  const title = document.createElement("span");
+  title.className = "result-title";
+  title.textContent = p.id + " — " + p.label + " (saved)";
+  hdr.appendChild(dot);
+  hdr.appendChild(title);
+  if (completedPhases.has(p.id)) {
+    const done = document.createElement("span");
+    done.className = "result-done";
+    done.textContent = "✓ COMPLETE";
+    hdr.appendChild(done);
+  }
+  block.appendChild(hdr);
+
+  const body = document.createElement("div");
+  outputs[p.id].split("\n").forEach(line => body.appendChild(renderMarkdownLine(line)));
+  block.appendChild(body);
+
+  outputScrollEl.appendChild(block);
+}
+
 function renderOutputs() {
+  if (activePhase) return; // showWorkPanel handles rendering while a phase is open
   outputScrollEl.innerHTML = "";
   const anyOutput = Object.keys(outputs).length > 0;
-  if (!anyOutput && !streaming) {
+  if (!anyOutput) {
     outputScrollEl.appendChild(emptyStateEl);
     return;
   }
-  PHASES.forEach(p => {
-    if (!outputs[p.id]) return;
-    const block = document.createElement("div");
-    block.className = "result-block";
-
-    const hdr = document.createElement("div");
-    hdr.className = "result-hdr";
-    const dot = document.createElement("div");
-    dot.className = "result-dot";
-    const title = document.createElement("span");
-    title.className = "result-title";
-    title.textContent = p.id + " — " + p.label;
-    hdr.appendChild(dot);
-    hdr.appendChild(title);
-    if (completedPhases.has(p.id)) {
-      const done = document.createElement("span");
-      done.className = "result-done";
-      done.textContent = "✓ COMPLETE";
-      hdr.appendChild(done);
-    }
-    block.appendChild(hdr);
-
-    const body = document.createElement("div");
-    outputs[p.id].split("\n").forEach(line => body.appendChild(renderMarkdownLine(line)));
-    block.appendChild(body);
-
-    if (activePhase === p.id && streaming) {
-      const cursor = document.createElement("span");
-      cursor.className = "cursor";
-      block.appendChild(cursor);
-    }
-    outputScrollEl.appendChild(block);
-  });
-  outputScrollEl.scrollTop = outputScrollEl.scrollHeight;
+  PHASES.forEach(p => { if (outputs[p.id]) appendSavedResult(p); });
 }
 
 function renderPhaseList() {
@@ -529,7 +555,7 @@ function renderPhaseList() {
 
     const card = document.createElement("div");
     card.className = "phase-card" + (isActive ? " active" : "") + (isComplete ? " complete" : "") + (isLocked ? " locked" : "");
-    if (!isLocked && !isActive) card.onclick = () => runPhase(p.id);
+    if (!isLocked) card.onclick = () => openPhase(p.id);
 
     const row = document.createElement("div");
     row.className = "pc-row";
@@ -553,7 +579,7 @@ function renderPhaseList() {
 
     const status = document.createElement("div");
     status.className = "pc-status";
-    status.textContent = isComplete ? "DONE" : isActive ? "RUNNING" : isLocked ? "LOCKED" : "READY";
+    status.textContent = isComplete ? "DONE" : isActive ? "OPEN" : isLocked ? "LOCKED" : "READY";
 
     row.appendChild(left);
     row.appendChild(status);
@@ -564,130 +590,16 @@ function renderPhaseList() {
   const completedCount = completedPhases.size;
   progressLabelEl.textContent = completedCount + "/" + PHASES.length + " PHASES";
   progressFillEl.style.width = (completedCount / PHASES.length * 100) + "%";
-  runAllBtn.disabled = streaming || completedCount === PHASES.length;
-  runAllBtn.textContent = streaming ? "⏳ EXECUTING..." : completedCount === PHASES.length ? "✓ ALL COMPLETE" : "▶ RUN ALL PHASES";
 }
 
-async function runPhase(phaseId) {
+function openPhase(phaseId) {
   const phase = PHASES.find(p => p.id === phaseId);
-  if (!phase || streaming) return;
-
-  const apiKey = getApiKey();
-  if (!apiKey) {
-    addTermLine("Cannot run " + phase.id + " — no API key set.", "err");
-    addTermLine("Click SET API KEY in the header and paste your Anthropic key.", "info");
-    return;
-  }
-
+  if (!phase) return;
   activePhase = phaseId;
-  streaming = true;
-  outputs[phaseId] = "";
+  addTermLine("opened " + phase.id + ' — "' + phase.label + '"', "cmd");
   renderPhaseList();
-  renderOutputs();
-  outputTitleEl.textContent = phase.id + " — " + phase.label;
-
-  addTermLine('execute ' + phase.id + ' — "' + phase.label + '"', "cmd");
-  addTermLine("Sending prompt to Claude API...", "info");
-
-  try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-        "anthropic-dangerous-direct-browser-access": "true",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 2000,
-        stream: true,
-        system: "You are a world-class SEO strategist and technical specialist. Produce structured, actionable, deployment-ready outputs. Use markdown headers, code blocks, and tables where they add clarity. Be specific — give real code, real URLs, real specifications. Never pad with generic advice.",
-        messages: [{ role: "user", content: phase.prompt }],
-      }),
-    });
-
-    if (!res.ok) {
-      const err = await res.text();
-      addTermLine("API error: " + res.status, "err");
-      addTermLine(err.slice(0, 200), "err");
-      streaming = false;
-      activePhase = null;
-      renderPhaseList();
-      return;
-    }
-
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-    let buffer = "";
-    let tokenCount = 0;
-
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split("\n");
-      buffer = lines.pop();
-
-      for (const line of lines) {
-        if (!line.startsWith("data: ")) continue;
-        const data = line.slice(6).trim();
-        if (data === "[DONE]") continue;
-        try {
-          const evt = JSON.parse(data);
-          if (evt.type === "content_block_delta" && evt.delta && evt.delta.text) {
-            tokenCount++;
-            outputs[phaseId] = (outputs[phaseId] || "") + evt.delta.text;
-            renderOutputs();
-          }
-        } catch (e) {}
-      }
-    }
-
-    addTermLine(phase.id + " complete — " + tokenCount + " tokens generated", "ok");
-    completedPhases.add(phaseId);
-    streaming = false;
-
-    if (autoChain) {
-      const idx = PHASES.findIndex(p => p.id === phaseId);
-      const next = PHASES[idx + 1];
-      if (next) {
-        addTermLine("Auto-chain enabled — queuing " + next.id + " in 3s...", "info");
-        activePhase = null;
-        renderPhaseList();
-        setTimeout(() => runPhase(next.id), 3000);
-      } else {
-        addTermLine("All phases complete. SEO rollout plan fully generated.", "ok");
-        activePhase = null;
-        renderPhaseList();
-      }
-    } else {
-      activePhase = null;
-      renderPhaseList();
-    }
-  } catch (err) {
-    addTermLine("Network error: " + err.message, "err");
-    streaming = false;
-    activePhase = null;
-    renderPhaseList();
-  }
+  showWorkPanel(phase);
 }
-
-toggleEl.onclick = () => {
-  autoChain = !autoChain;
-  toggleEl.style.background = autoChain ? "#C8841A" : "#2A2A2A";
-  toggleEl.style.borderColor = autoChain ? "#C8841A" : "#444";
-  toggleEl.querySelector(".toggle-dot").style.left = autoChain ? "20px" : "2px";
-};
-
-runAllBtn.onclick = () => {
-  autoChain = true;
-  toggleEl.style.background = "#C8841A";
-  toggleEl.style.borderColor = "#C8841A";
-  toggleEl.querySelector(".toggle-dot").style.left = "20px";
-  const next = PHASES.find(p => !completedPhases.has(p.id));
-  if (next) runPhase(next.id);
-};
 
 renderPhaseList();
 renderOutputs();

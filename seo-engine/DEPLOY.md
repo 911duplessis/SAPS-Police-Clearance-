@@ -1,18 +1,27 @@
-# (Optional) Deploying a shared backend proxy
+# (Optional) Backend proxy / API-key paths
 
-By default, `seo-engine.html` runs entirely from your own browser: click
-"SET API KEY" in the page, paste your Anthropic API key, and it's stored
-in that browser's `localStorage` only — never written to this repo. That's
-the right setup for one person running it locally/privately on their own
-device, and needs no deployment at all.
+By default, `seo-engine.html` runs in **manual mode**: no API key, no
+backend, no cost. For each phase you click "Copy Prompt", paste it into
+the free chat at [claude.ai](https://claude.ai/new), paste the reply back
+into the page, and the phase is marked complete. Nothing ever leaves your
+browser except the copy/paste you do by hand, and there's nothing to
+deploy.
 
-The downside of that default setup: the key lives in browser storage on
-whatever device it's entered on, so don't enter it on a shared/public
-computer or share that page's URL with the key already saved. If instead
-you want multiple people to use the engine **without** any of them ever
-seeing the API key, use this folder's `worker.js` — a small **Cloudflare
-Worker** that holds the key server-side and streams the response back, and
-point `seo-engine.html` at it instead of calling Anthropic directly.
+The options below are for anyone who'd rather automate the calls instead
+of copy/pasting by hand — neither is required.
+
+**Option 1 — your own API key, client-side only.** Wire `seo-engine.html`
+to call `https://api.anthropic.com/v1/messages` directly from the browser
+with a key entered via prompt and stored in that browser's `localStorage`
+only (never written to this repo). Simple, but the key lives in browser
+storage on whatever device it's entered on — don't use this on a
+shared/public computer or share the page URL with the key already saved.
+
+**Option 2 — shared backend proxy.** If multiple people need to run
+phases **without** any of them ever seeing an API key, use this folder's
+`worker.js` — a small **Cloudflare Worker** that holds the key server-side
+and streams the response back, and point `seo-engine.html` at it instead
+of calling Anthropic directly.
 
 This is a one-time setup (~10 minutes), done by whoever has (or creates) a
 Cloudflare account and an Anthropic API key. I can't run these commands
