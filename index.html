@@ -160,7 +160,7 @@ h3 { font-size:20px; }
   width:38px; height:38px; border-radius:50%;
   background:linear-gradient(135deg, var(--gold), var(--gold-2));
   display:flex; align-items:center; justify-content:center;
-  font-size:18px; flex-shrink:0;
+  font-size:13px; font-weight:700; letter-spacing:.5px; color:var(--ink); flex-shrink:0;
 }
 .chat-name { font-size:14px; font-weight:700; color:#fff; }
 .chat-status { font-size:11px; color:rgba(255,255,255,.5); display:flex; align-items:center; gap:5px; }
@@ -394,7 +394,8 @@ h3 { font-size:20px; }
   padding:16px 20px; border-right:1px solid rgba(255,255,255,.05);
 }
 .ti:last-child { border-right:none; }
-.ti-ico { font-size:18px; flex-shrink:0; }
+.ti-ico { flex-shrink:0; color:var(--gold-3); width:20px; height:20px; }
+.ti-ico svg { width:20px; height:20px; }
 .ti strong { font-size:13px; color:#fff; font-weight:600; display:block; line-height:1.2; }
 .ti span { font-size:11px; color:rgba(255,255,255,.36); }
 
@@ -406,6 +407,7 @@ h3 { font-size:20px; }
 .section.bg-navy { background:var(--navy); }
 .section.bg-ink { background:var(--ink); }
 .sh { margin-bottom:14px; }
+.sh.light { color:#fff; }
 .sdesc { font-size:15.5px; color:var(--muted); line-height:1.82; max-width:580px; margin-bottom:48px; font-weight:300; }
 
 /* ═══════════════════════════════════════
@@ -483,8 +485,9 @@ h3 { font-size:20px; }
 .svc-ico {
   width:48px; height:48px; background:var(--gold-pale);
   border-radius:10px; display:flex; align-items:center; justify-content:center;
-  font-size:22px; margin-bottom:18px;
+  color:var(--gold-2); margin-bottom:18px;
 }
+.svc-ico svg { width:22px; height:22px; }
 .svc-card h3 { font-family:var(--f-body); font-size:16px; font-weight:700; color:var(--navy); margin-bottom:8px; }
 .svc-card p { font-size:13.5px; color:var(--muted); line-height:1.72; }
 .svc-list { margin-top:14px; list-style:none; }
@@ -647,7 +650,8 @@ h3 { font-size:20px; }
   border-radius:var(--r); padding:14px 18px; transition:all .2s; cursor:pointer;
 }
 .cm:hover { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); }
-.cm-ico { font-size:20px; flex-shrink:0; }
+.cm-ico { flex-shrink:0; color:var(--gold-3); }
+.cm-ico svg { width:20px; height:20px; }
 .cm strong { font-size:14px; color:#fff; font-weight:600; display:block; margin-bottom:1px; }
 .cm span { font-size:12px; color:rgba(255,255,255,.38); }
 .cta-panel {
@@ -761,7 +765,7 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
 <div class="chat-bubble" id="chatBubble">
   <div class="chat-header">
     <div class="chat-header-info">
-      <div class="chat-avatar">👩‍💼</div>
+      <div class="chat-avatar">EM</div>
       <div>
         <div class="chat-name">Elanza Muller</div>
         <div class="chat-status">Usually replies in minutes</div>
@@ -770,7 +774,7 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
     <button class="chat-close" id="chatClose" aria-label="Close chat">×</button>
   </div>
   <div class="chat-body" id="chatBody">
-    <div class="chat-msg bot">Hi there! 👋 I'm Elanza. How can I help you with your South African Police Clearance today?</div>
+    <div class="chat-msg bot">Hello, I'm Elanza. How can I help with your South African Police Clearance?</div>
   </div>
   <div class="chat-cta-row">
     <a href="https://wa.me/64225658925?text=Hi%20Elanza%2C%20I%20would%20like%20to%20enquire%20about%20getting%20a%20Police%20Clearance." target="_blank" rel="noopener" class="chat-wa-btn">
@@ -819,7 +823,8 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
         Call Now
       </a>
       <a href="https://wa.me/64225658925?text=Hi%20Elanza%2C%20I%20would%20like%20to%20enquire%20about%20getting%20a%20Police%20Clearance." target="_blank" rel="noopener" class="btn-nav">
-        💬 WhatsApp
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
       </a>
     </div>
     <button class="ham" id="ham" aria-label="Menu">
@@ -834,8 +839,8 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
     <a href="#faq">FAQ</a>
     <a href="#contact">Contact</a>
     <div class="mob-btns">
-      <a href="https://wa.me/64225658925?text=Hi%20Elanza%2C%20I%20would%20like%20to%20enquire%20about%20getting%20a%20Police%20Clearance." target="_blank" rel="noopener" class="btn-wa-mob">💬 WhatsApp Elanza</a>
-      <a href="tel:+64225658925" class="btn-call-mob">📞 Call +64 22 565 8925</a>
+      <a href="https://wa.me/64225658925?text=Hi%20Elanza%2C%20I%20would%20like%20to%20enquire%20about%20getting%20a%20Police%20Clearance." target="_blank" rel="noopener" class="btn-wa-mob"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp Elanza</a>
+      <a href="tel:+64225658925" class="btn-call-mob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" width="16" height="16"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> Call +64 22 565 8925</a>
     </div>
   </div>
 </nav>
@@ -860,7 +865,8 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
             WhatsApp Elanza
           </a>
           <a href="tel:+64225658925" class="btn-outline reveal" style="transition-delay:.28s">
-            📞 +64 22 565 8925
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            +64 22 565 8925
           </a>
         </div>
         <p class="hero-note reveal" style="transition-delay:.32s">Certified by <a href="https://www.forensicinsight.co.nz" target="_blank" rel="noopener">Forensic Insight Ltd</a> &amp; <a href="https://www.fingerprintservices.co.nz" target="_blank" rel="noopener">Fingerprint Services NZ</a></p>
@@ -912,11 +918,11 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
 <div class="trust">
   <div class="wrap">
     <div class="trust-row">
-      <div class="ti"><span class="ti-ico">🏆</span><div><strong>2025/26 Award Winner</strong><span>NZ Prestige Awards</span></div></div>
-      <div class="ti"><span class="ti-ico">🔬</span><div><strong>Forensic Insight Certified</strong><span>forensicinsight.co.nz</span></div></div>
-      <div class="ti"><span class="ti-ico">🖐</span><div><strong>Fingerprint Services NZ</strong><span>fingerprintservices.co.nz</span></div></div>
-      <div class="ti"><span class="ti-ico">📍</span><div><strong>Christchurch Based</strong><span>Serving all of New Zealand</span></div></div>
-      <div class="ti"><span class="ti-ico">⚡</span><div><strong>Fast Track Available</strong><span>Priority submission</span></div></div>
+      <div class="ti"><span class="ti-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4h8v4a4 4 0 0 1-8 0V4z"/><path d="M8 5H5.5A1.5 1.5 0 0 0 4 6.5C4 8.5 5.5 10 7.5 10"/><path d="M16 5h2.5A1.5 1.5 0 0 1 20 6.5c0 2-1.5 3.5-3.5 3.5"/><path d="M9 20h6"/><path d="M12 16v4"/></svg></span><div><strong>2025/26 Award Winner</strong><span>NZ Prestige Awards</span></div></div>
+      <div class="ti"><span class="ti-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6z"/><path d="M9 12l2 2 4-4.5"/></svg></span><div><strong>Forensic Insight Certified</strong><span>forensicinsight.co.nz</span></div></div>
+      <div class="ti"><span class="ti-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 11c1.5 0 2.5 1 2.5 3v2"/><path d="M9 12.5c0-2 1.3-3.5 3-3.5s3 1.5 3 3.5v3.5"/><path d="M6.5 13c0-3.5 2.5-6 5.5-6s5.5 2.5 5.5 6c0 1 0 2 .3 3"/><path d="M4.5 13.5c0-4.5 3.3-8 7.5-8s7.5 3.5 7.5 8"/></svg></span><div><strong>Fingerprint Services NZ</strong><span>fingerprintservices.co.nz</span></div></div>
+      <div class="ti"><span class="ti-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-6.5-5.8-6.5-11A6.5 6.5 0 1 1 18.5 10c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.2"/></svg></span><div><strong>Christchurch Based</strong><span>Serving all of New Zealand</span></div></div>
+      <div class="ti"><span class="ti-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></span><div><strong>Fast Track Available</strong><span>Priority submission</span></div></div>
     </div>
   </div>
 </div>
@@ -951,7 +957,8 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
             WhatsApp Now
           </a>
           <a href="tel:+64225658925" class="gbp-action-btn gbp-call">
-            📞 +64 22 565 8925
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="15" height="15"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            +64 22 565 8925
           </a>
         </div>
       </div>
@@ -1025,7 +1032,7 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
     <p class="sdesc reveal" style="transition-delay:.1s">Everything you need to obtain your South African Police Clearance Certificate from New Zealand — managed end to end.</p>
     <div class="svc-grid">
       <div class="svc-card reveal">
-        <div class="svc-ico">📋</div>
+        <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="4" width="12" height="17" rx="1.5"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9.5 13l2 2 4-4.5"/></svg></div>
         <h3>SAPS Police Clearance</h3>
         <p>Full coordination of your South African Police Clearance from NZ. Includes documentation, submission to SAPS, and delivery of your certificate.</p>
         <ul class="svc-list">
@@ -1036,7 +1043,7 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
         </ul>
       </div>
       <div class="svc-card reveal" style="transition-delay:.07s">
-        <div class="svc-ico">🖐</div>
+        <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 11c1.5 0 2.5 1 2.5 3v2"/><path d="M9 12.5c0-2 1.3-3.5 3-3.5s3 1.5 3 3.5v3.5"/><path d="M6.5 13c0-3.5 2.5-6 5.5-6s5.5 2.5 5.5 6c0 1 0 2 .3 3"/><path d="M4.5 13.5c0-4.5 3.3-8 7.5-8s7.5 3.5 7.5 8"/></svg></div>
         <h3>Fingerprint Capture</h3>
         <p>Elanza is a certified technician — fingerprints captured personally in Christchurch. Correct format, quality guaranteed for SAPS acceptance.</p>
         <ul class="svc-list">
@@ -1047,7 +1054,7 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
         </ul>
       </div>
       <div class="svc-card reveal" style="transition-delay:.14s">
-        <div class="svc-ico">⚡</div>
+        <div class="svc-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></div>
         <h3>Fast Track Service</h3>
         <p>Urgent deadline? Priority document preparation, expedited fingerprint scheduling, and fast submission. SAPS processing times are external but we prepare everything immediately.</p>
         <ul class="svc-list">
@@ -1058,17 +1065,17 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
         </ul>
       </div>
       <div class="svc-card reveal" style="transition-delay:.06s">
-        <div class="svc-ico">🌏</div>
+        <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 4 6 4 9s-1.5 6.4-4 9c-2.5-2.6-4-6-4-9s1.5-6.4 4-9z"/></svg></div>
         <h3>Serving All of NZ</h3>
         <p>Based in Christchurch but assisting South Africans across New Zealand. Remote document coordination available nationwide.</p>
       </div>
       <div class="svc-card reveal" style="transition-delay:.12s">
-        <div class="svc-ico">📄</div>
+        <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h7l3 3v15H7z"/><path d="M14 3v3h3"/><path d="M9.5 12h5M9.5 15h5M9.5 9h2"/></svg></div>
         <h3>Document Preparation</h3>
         <p>All required forms completed accurately. Nothing rejected due to paperwork errors. Checklist provided upfront so you know exactly what's needed.</p>
       </div>
       <div class="svc-card reveal" style="transition-delay:.18s">
-        <div class="svc-ico">🎯</div>
+        <div class="svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></div>
         <h3>Multi-Purpose Clearance</h3>
         <p>Accepted for NZ residency, Australia, UK, Canada, UAE, Singapore and most OECD countries. Advice on country-specific requirements.</p>
       </div>
@@ -1109,8 +1116,8 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
           <span class="tag-item">NZ Prestige Award 2025/26</span>
         </div>
         <div class="about-actions reveal" style="transition-delay:.25s">
-          <a href="https://wa.me/64225658925?text=Hi%20Elanza%2C%20I%20would%20like%20to%20enquire%20about%20getting%20a%20Police%20Clearance." target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:9px;background:var(--green);color:#fff;padding:13px 22px;border-radius:9px;font-size:14.5px;font-weight:700;box-shadow:var(--shadow-green);transition:all .2s;">💬 WhatsApp Elanza</a>
-          <a href="tel:+64225658925" style="display:inline-flex;align-items:center;gap:9px;background:var(--gold);color:var(--ink);padding:13px 22px;border-radius:9px;font-size:14.5px;font-weight:700;box-shadow:var(--shadow-gold);transition:all .2s;">📞 Call Now</a>
+          <a href="https://wa.me/64225658925?text=Hi%20Elanza%2C%20I%20would%20like%20to%20enquire%20about%20getting%20a%20Police%20Clearance." target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:9px;background:var(--green);color:#fff;padding:13px 22px;border-radius:9px;font-size:14.5px;font-weight:700;box-shadow:var(--shadow-green);transition:all .2s;"><svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp Elanza</a>
+          <a href="tel:+64225658925" style="display:inline-flex;align-items:center;gap:9px;background:var(--gold);color:var(--ink);padding:13px 22px;border-radius:9px;font-size:14.5px;font-weight:700;box-shadow:var(--shadow-gold);transition:all .2s;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="15" height="15"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> Call Now</a>
         </div>
       </div>
     </div>
@@ -1168,7 +1175,7 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
     <!-- Award Banner -->
     <div style="margin-top:32px;background:var(--navy);border-radius:var(--r-xl);overflow:hidden;display:flex;align-items:center;gap:32px;padding:28px 36px;border:1px solid rgba(200,132,26,.2);" class="reveal">
       
-      <div style="width:64px;height:64px;min-width:64px;background:linear-gradient(135deg,var(--gold),var(--gold-3));border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;">🏆</div>
+      <div style="width:64px;height:64px;min-width:64px;background:linear-gradient(135deg,var(--gold),var(--gold-3));border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6" width="28" height="28"><path d="M8 4h8v4a4 4 0 0 1-8 0V4z"/><path d="M8 5H5.5A1.5 1.5 0 0 0 4 6.5C4 8.5 5.5 10 7.5 10"/><path d="M16 5h2.5A1.5 1.5 0 0 1 20 6.5c0 2-1.5 3.5-3.5 3.5"/><path d="M9 20h6"/><path d="M12 16v4"/></svg></div>
       <div>
         <div style="font-family:var(--f-mono);font-size:10px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">New Zealand Prestige Awards</div>
         <div style="font-family:var(--f-display);font-size:22px;color:#fff;margin-bottom:4px;">2025/26 Winner — <span style="color:var(--gold-3);font-style:italic;">Fingerprint Services Provider of the Year</span></div>
@@ -1230,19 +1237,19 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
         <p style="font-size:15px;color:rgba(255,255,255,.52);line-height:1.82;margin-bottom:26px;font-weight:300" class="reveal" style="transition-delay:.1s">Contact Elanza directly — by WhatsApp, phone, or email. She'll send you a full checklist and quote within one business day.</p>
         <div class="contact-methods">
           <a href="https://wa.me/64225658925?text=Hi%20Elanza%2C%20I%20would%20like%20to%20enquire%20about%20getting%20a%20Police%20Clearance." target="_blank" rel="noopener" class="cm reveal">
-            <div class="cm-ico">💬</div>
+            <div class="cm-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
             <div><strong>WhatsApp Elanza</strong><span>+64 22 565 8925 — quickest response</span></div>
           </a>
           <a href="tel:+64225658925" class="cm reveal" style="transition-delay:.06s">
-            <div class="cm-ico">📞</div>
+            <div class="cm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div>
             <div><strong>Call Elanza</strong><span>+64 22 565 8925</span></div>
           </a>
           <a href="mailto:elanza@sapspoliceclearance.com" class="cm reveal" style="transition-delay:.1s">
-            <div class="cm-ico">✉️</div>
+            <div class="cm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg></div>
             <div><strong>Email</strong><span>elanza@sapspoliceclearance.com</span></div>
           </a>
           <div class="cm reveal" style="cursor:default;transition-delay:.14s">
-            <div class="cm-ico">📍</div>
+            <div class="cm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-6.5-5.8-6.5-11A6.5 6.5 0 1 1 18.5 10c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.2"/></svg></div>
             <div><strong>Location</strong><span>Christchurch, Canterbury, New Zealand</span></div>
           </div>
         </div>
@@ -1251,8 +1258,8 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
         <h3>Start Your SA Clearance</h3>
         <p>Structured. Certified. Stress-free. Coordinated from Christchurch for South Africans across New Zealand.</p>
         <div class="cta-stack">
-          <a href="https://wa.me/64225658925?text=Hi%20Elanza%2C%20I%20would%20like%20to%20enquire%20about%20getting%20a%20Police%20Clearance." target="_blank" rel="noopener" class="btn-wa-lg">💬 WhatsApp Elanza Now</a>
-          <a href="tel:+64225658925" class="btn-gold-lg">📞 Call +64 22 565 8925</a>
+          <a href="https://wa.me/64225658925?text=Hi%20Elanza%2C%20I%20would%20like%20to%20enquire%20about%20getting%20a%20Police%20Clearance." target="_blank" rel="noopener" class="btn-wa-lg"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp Elanza Now</a>
+          <a href="tel:+64225658925" class="btn-gold-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> Call +64 22 565 8925</a>
         </div>
         <div class="cta-note">Response within 1 business day · Full checklist provided · No obligation</div>
       </div>
@@ -1279,8 +1286,8 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
         <span class="footer-tagline">Assisting South Africans with<br>all their clearance needs.</span>
         <p>South African Police Clearance &amp; Fingerprint Coordination — Christchurch, Canterbury, NZ. Certified by Forensic Insight Ltd &amp; Fingerprint Services NZ.</p>
         <div class="f-btns">
-          <a href="https://wa.me/64225658925?text=Hi%20Elanza%2C%20I%20would%20like%20to%20enquire%20about%20getting%20a%20Police%20Clearance." target="_blank" rel="noopener" class="fbtn fbtn-wa">💬 WhatsApp</a>
-          <a href="tel:+64225658925" class="fbtn fbtn-call">📞 Call</a>
+          <a href="https://wa.me/64225658925?text=Hi%20Elanza%2C%20I%20would%20like%20to%20enquire%20about%20getting%20a%20Police%20Clearance." target="_blank" rel="noopener" class="fbtn fbtn-wa"><svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+          <a href="tel:+64225658925" class="fbtn fbtn-call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="13" height="13"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> Call</a>
         </div>
       </div>
       <div>
@@ -1311,10 +1318,10 @@ footer > .wrap > .footer-grid > div > p { font-size:13px; color:rgba(255,255,255
       <div>
         <h4>Contact</h4>
         <ul>
-          <li><a href="https://wa.me/64225658925?text=Hi%20Elanza%2C%20I%20would%20like%20to%20enquire%20about%20getting%20a%20Police%20Clearance." target="_blank" rel="noopener">💬 WhatsApp</a></li>
-          <li><a href="tel:+64225658925">📞 +64 22 565 8925</a></li>
-          <li><a href="mailto:elanza@sapspoliceclearance.com">✉ elanza@sapspoliceclearance.com</a></li>
-          <li><a href="#contact">📍 Christchurch, NZ</a></li>
+          <li><a href="https://wa.me/64225658925?text=Hi%20Elanza%2C%20I%20would%20like%20to%20enquire%20about%20getting%20a%20Police%20Clearance." target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="tel:+64225658925">+64 22 565 8925</a></li>
+          <li><a href="mailto:elanza@sapspoliceclearance.com">elanza@sapspoliceclearance.com</a></li>
+          <li><a href="#contact">Christchurch, NZ</a></li>
         </ul>
         <h4 style="margin-top:22px">Domains</h4>
         <ul>
@@ -1374,10 +1381,10 @@ const chatSend   = document.getElementById('chatSend');
 const chatBody   = document.getElementById('chatBody');
 
 const botReplies = [
-  "Great question! I'd be happy to help. The quickest way to get a full answer is to WhatsApp me directly — I usually reply within minutes. 💬",
-  "Thanks for reaching out! For a detailed quote or timeline, WhatsApp is best — tap the green button below.",
-  "I handle everything from fingerprints to SAPS submission. Pop me a WhatsApp and I'll send you a full checklist right away!",
-  "That's something I can definitely help with. Send me a WhatsApp message and let's get your clearance sorted! 🎯"
+  "Good question. The quickest way to get a full answer is to WhatsApp me directly — I usually reply within minutes.",
+  "Thanks for reaching out. For a detailed quote or timeline, WhatsApp is best — tap the green button below.",
+  "I handle everything from fingerprints to SAPS submission personally. Send me a WhatsApp message and I'll send a full checklist.",
+  "I can help with that. Send me a WhatsApp message and we'll get your clearance underway."
 ];
 let replyIndex = 0;
 
