@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /seo-engine.html
+Disallow: /sisterguide.html
+Disallow: /tswelopele-homepage.html
+Disallow: /index%2013%20May.html
 
 Sitemap: https://www.sapspoliceclearance.com/sitemap.xml
