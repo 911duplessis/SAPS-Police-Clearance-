@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /seo-engine.html
-Disallow: /sisterguide.html
 
 Sitemap: https://sapspoliceclearance.com/sitemap.xml
