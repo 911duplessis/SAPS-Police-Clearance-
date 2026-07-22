@@ -17,6 +17,11 @@ the build). Checks performed:
   4. Internal links (href="/...") resolve to a real file in the repo.
   5. <img> tags have an alt attribute.
   6. og:url / canonical host matches the production domain.
+  7. Exactly one <h1> per indexable page.
+  8. <html> has a lang attribute.
+  9. target="_blank" links carry rel="noopener" (tabnapping / SEO hygiene).
+  10. No two indexable pages share an identical <title> or meta description
+      (duplicate metadata dilutes ranking signals and confuses SERP snippets).
 """
 import json
 import os
@@ -26,6 +31,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOMAIN = "https://sapspoliceclearance.com"
+MISSPELLED_DOMAIN = "sapspoliceclearence"  # "clearence" — a real typo domain exists; never reference it
 
 # Pages that intentionally opt out of indexing / full checks.
 NOINDEX_ALLOWED = {"404.html", "progress-report.html", "seo-engine.html"}
@@ -64,6 +70,24 @@ def expected_canonical(name):
 def check_page(name):
     path = os.path.join(ROOT, name)
     html = open(path, encoding="utf-8").read()
+
+    # Misspelled domain must never appear anywhere on the live site — a
+    # real typo-domain duplicate exists off-repo; don't accidentally link it.
+    if MISSPELLED_DOMAIN in html.lower() and name != "progress-report.html":
+        err(f"{name}: references the misspelled domain ({MISSPELLED_DOMAIN}...) — should be sapspoliceclearance")
+
+    if "<html" in html and not re.search(r"<html[^>]*\slang=", html, re.I):
+        err(f"{name}: <html> tag missing lang attribute")
+
+    h1_count = len(re.findall(r"<h1\b", html))
+    if name not in NOINDEX_ALLOWED and h1_count != 1:
+        err(f"{name}: expected exactly 1 <h1>, found {h1_count}")
+
+    for a_tag in re.findall(r'<a\b[^>]*>', html):
+        if 'target="_blank"' in a_tag and "rel=" in a_tag and "noopener" not in a_tag:
+            err(f"{name}: target=\"_blank\" link missing rel=\"noopener\" — {a_tag[:90]}")
+        elif 'target="_blank"' in a_tag and "rel=" not in a_tag:
+            err(f"{name}: target=\"_blank\" link missing rel=\"noopener\" — {a_tag[:90]}")
 
     title_m = re.search(r"<title>(.*?)</title>", html, re.S)
     if not title_m:
@@ -145,10 +169,33 @@ def check_sitemap():
         warn(f"sitemap.xml: entry {u} does not correspond to a known indexable page")
 
 
+def check_duplicates():
+    titles = {}
+    descs = {}
+    for name in html_files():
+        if name in NOINDEX_ALLOWED or name in SKIP_ENTIRELY:
+            continue
+        html = open(os.path.join(ROOT, name), encoding="utf-8").read()
+        title_m = re.search(r"<title>(.*?)</title>", html, re.S)
+        if title_m:
+            titles.setdefault(title_m.group(1).strip(), []).append(name)
+        desc = get_meta(html, name="description")
+        if desc:
+            descs.setdefault(desc, []).append(name)
+
+    for title, pages in titles.items():
+        if len(pages) > 1:
+            err(f"duplicate <title> {title!r} used on: {', '.join(pages)}")
+    for desc, pages in descs.items():
+        if len(pages) > 1:
+            err(f"duplicate meta description used on: {', '.join(pages)}")
+
+
 def main():
     for name in html_files():
         check_page(name)
     check_sitemap()
+    check_duplicates()
 
     for w in warnings:
         print(f"WARN  {w}")
