@@ -124,3 +124,72 @@ This directly prevents the most common regressions in a hand-edited static site:
 **New:** `guides.html`, `what-is-a-police-clearance-certificate.html`, `required-documents.html`, `fingerprint-requirements.html`, `apostille-and-authentication.html`, `police-clearance-cost.html`, `common-mistakes.html`, `faq.html`, `police-clearance-for-uk-visa.html`, `police-clearance-for-australia-visa.html`, `404.html`, `favicon.svg`, `assets/img/em-services-logo.jpg`, `scripts/seo_check.py`, `.github/workflows/seo-check.yml`, `SEO_AUDIT.md`
 
 **Modified:** `index.html`, `christchurch.html`, `how-long-does-it-take.html`, `sitemap.xml`
+
+---
+---
+
+# Phase 2 — Domain/Search Console Audit, EEAT, Accessibility & Automation
+
+**Date:** 2026-07-23
+**Scope:** Repository consolidation is complete — `911duplessis/SAPS-Police-Clearance-` is the sole, permanent repository. This phase covers a Search Console / domain-integrity audit, EEAT infrastructure (Privacy/Terms), structured-data expansion, visible internal linking (breadcrumbs, HTML sitemap), accessibility fixes, a real font-loading bug, and stronger CI validation.
+
+## 1. Domain integrity audit (in response to the misspelled-domain question)
+
+**The repository itself is clean.** A full-text search across every canonical URL, Open Graph tag, JSON-LD block, `sitemap.xml`, `robots.txt`, and internal `href` in this repo turns up **zero** occurrences of the misspelled `sapspoliceclearence.com` in any functional SEO surface. Every canonical/OG URL in the codebase resolves to `https://sapspoliceclearance.com`. A permanent regression guard for this was added to `scripts/seo_check.py` (`MISSPELLED_DOMAIN` check) so it can never silently reappear.
+
+**The typo domain is a real, separate, still-live problem — but it isn't in this repo.** An internal status page already in the repo (`progress-report.html`, noindex, written by an earlier session) documents that two duplicate deployments still exist under the `iamstiaan` GitHub account and were never addressed:
+- `iamstiaan/Sapspoliceclearancenz` — CNAME'd directly to the misspelled `sapspoliceclearence.com`, still live
+- `iamstiaan/SAPS-Clear` — a third, undiscussed duplicate
+
+This is exactly the same category of problem as `iamstiaan/SAPS-Police-Clearance-legacy`, which you already deleted earlier in this session. That's almost certainly why Search Console shows a second `sc-domain:sapspoliceclearence.com` property — it's a genuinely separate, still-serving website, not a misconfiguration in this repo. **Recommended fix, same playbook as before:** log into `iamstiaan`, confirm neither repo is needed, and delete them (or transfer + rename if you want to preserve them as inert archives). I can't do this myself — no credentials for that account, and repo-transfer/deletion has to happen in your browser.
+
+## 2. The 3 Search Console "page with redirect" URLs
+
+I don't have Search Console access in this session, so I can't see the exact 3 URLs — but I can rule in/out likely causes from what's actually deployed:
+
+- No `_redirects` file, no `<meta http-equiv="refresh">`, and no server-side redirect config exists anywhere in this repo — this is a static GitHub Pages site with none of the usual self-inflicted redirect problems.
+- GitHub Pages **automatically** issues redirects for: (a) `http://` → `https://` once HTTPS is enforced, (b) the `www.sapspoliceclearance.com` variant → the apex domain, and (c) the fallback `911duplessis.github.io/SAPS-Police-Clearance-/...` address → the custom domain. That's three plausible, entirely expected redirect sources — and notably, an earlier internal note (inside `seo-engine.html`, an internal tool page) explicitly discusses confirming `www.sapspoliceclearance.com` as a redirect target, confirming the `www` variant is a live, intentional redirect.
+- **My assessment: these 3 are very likely benign, expected redirects, not errors** — Search Console's "Page with redirect" status is informational (it means Google found a URL and correctly followed a redirect), not necessarily something to fix, *unless* one of those 3 URLs is what's actually listed in `sitemap.xml` (a sitemap should only ever list final, 200-status canonical URLs). I've verified `sitemap.xml` only lists the canonical `https://sapspoliceclearance.com/...` form, so that's not the case here.
+
+**To close this out with certainty**, paste me the 3 exact URLs from Search Console's Page Indexing → "Page with redirect" report and I'll give you a definitive verdict on each rather than a general one.
+
+## 3. Google Business Profile consistency (real bug found and fixed)
+
+You confirmed the real GBP is **"SAPS Police Clearance NZ"**, Canterbury Region, NZ. Checking the code against that:
+
+- The homepage's visible Google Business Profile section already correctly links `g.page/r/sapspoliceclearancenz` (matching reviews + "leave a review" links) — this was already right.
+- **Bug found:** the `Organization` schema's `sameAs` — which is *also* named "SAPS Police Clearance NZ" — was pointing at `g.page/em-services-nz` instead, a differently-named profile (EM Services is credited elsewhere on the page as the separate holding-company entity, which is a legitimate distinct profile, just not the one this particular schema node represents). **Fixed:** both `Organization` and `LocalBusiness` schema now correctly `sameAs` the actual "SAPS Police Clearance NZ" profile (`g.page/r/sapspoliceclearancenz`), matching the entity name in both places. The EM Services partner-card link elsewhere on the page was left untouched, since it's correctly labelled as EM Services' own profile.
+- This is exactly the NAP (Name/Address/Phone)-consistency signal you asked about — business name, address (Christchurch, Canterbury, NZ), and now the Business Profile link all agree between the live site, its structured data, and the real GBP.
+- On the existing `aggregateRating` (5.0, 47 reviews): the same internal progress report confirms this was sourced from real competitor/business research in an earlier session, not fabricated during content generation — which is reassuring context, but I still can't independently re-verify it's live-synced to the current GBP rating from this session. Worth a human glance at the actual profile to confirm the number hasn't drifted; not changed here.
+
+## 4. What else shipped in Phase 2
+
+| Change | Why |
+|---|---|
+| **Privacy Policy + Terms of Service pages** (`/privacy-policy.html`, `/terms-of-service.html`) | The biggest EEAT gap from Phase 1 — accurate, honest description of GA4 use, no invented data-handling claims, service disclaimers, NZ governing law |
+| **HTML sitemap page** (`/sitemap.html`) | Human-readable index of every page; another internal-linking pass |
+| **Visible breadcrumb trail** on every subpage (`<nav aria-label="Breadcrumb">`), matching the existing JSON-LD | Was schema-only before; now a real, crawlable, accessible UI element with anchor-text internal links |
+| **`Person` schema for Elanza**, linked as `employee` on both `Organization` and `LocalBusiness` | Attributes expertise to a real, named, credentialed individual — genuine E-E-A-T, not fabricated |
+| **Explicit `ImageObject` schema** for the logo/OG image, referenced by `@id` from `Organization`/`LocalBusiness`/`Person` | Requested in the original brief, never implemented until now |
+| **`HowTo` schema** for the homepage's 5-step process | Legitimate rich-result candidate (noting Google reduced how often `HowTo` renders as a visible SERP feature in 2023 — still valid, correct markup either way) |
+| **`lost-or-expired-certificate.html`** — one new guide | Distinct, common search intent nothing else on the site covered; not padding — everything else in the Phase 1 backlog (Canada/US/UAE pages) was deliberately held back |
+| **Fixed a real font-rendering bug**: `Outfit` weight 800 is used on the logo and every primary CTA button but was never requested from Google Fonts (browsers were faux-bolding it); `Space Mono` italic was requested but used nowhere. Both fixed across all 20 pages | Visible-UI rendering quality + a small payload trim |
+| **Skip-to-content link** + `id="main"` on every `<main>` (added a real `<main>` landmark to the homepage, which didn't have one) | Baseline keyboard/screen-reader accessibility that was missing |
+| **`scripts/seo_check.py` expanded**: single-`<h1>` check, `<html lang>` check, `target="_blank"` without `rel="noopener"` check, duplicate title/meta-description detection across pages, and the misspelled-domain regression guard | Catches the failure modes most likely to creep in as the page count grows |
+| **Footer legal links** (Privacy · Terms · Sitemap) added to every page | Standard, expected trust-signal placement |
+
+Full validation: `scripts/seo_check.py` → 0 errors across all 20 pages (2 pre-existing, deliberately-untouched title-length warnings on already-indexed pages carried over from Phase 1).
+
+## 5. Prioritised roadmap — what's left
+
+| Recommendation | Impact | Effort |
+|---|---|---|
+| Delete/retire `iamstiaan/Sapspoliceclearancenz` and `iamstiaan/SAPS-Clear` | **High** — removes a genuine duplicate-content/typo-domain liability in Search Console | Low (same delete flow already used once) |
+| Confirm the 3 GSC redirect URLs and close out validation | **High** — directly unblocks the one flagged Search Console issue | Low (needs the 3 URLs from you) |
+| Verify the 47-review `aggregateRating` still matches the live GBP rating | **Medium** — EEAT/trust accuracy | Low (a human glance at the GBP) |
+| Finish the content cluster: Canada/US/UAE visa-use pages, employment background-check page | **Medium** — broadens topical coverage, same proven template | Medium |
+| Self-host the actual font subset instead of the Google Fonts CDN request | **Medium** — further Core Web Vitals/LCP improvement | Medium-High (needs font subsetting tooling not available in this environment) |
+| Add a working client-side search on `/guides.html`, then reinstate `SearchAction` schema | **Low-Medium** — legitimate rich-result + UX improvement | Medium |
+| Secure `sapspoliceclearance.co.nz` (already recommended in the earlier competitor audit) | **Low-Medium** — defensive/brand, not urgent | Low (registration only, no dev work) |
+| PNG/ICO favicon fallback alongside the new `favicon.svg` | **Low** — cosmetic, older-browser only | Low (needs image tooling not available in this environment) |
+| Get Elanza to actually review new guide content, then add a genuine "reviewed by" byline | **Low direct SEO impact, meaningful EEAT** | Low effort, but needs her time, not mine |

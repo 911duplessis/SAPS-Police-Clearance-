@@ -34,8 +34,17 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
   {"@type":"WebSite","@id":"https://sapspoliceclearance.com/#website","url":"https://sapspoliceclearance.com/","name":"SAPS Police Clearance NZ","description":"South African Police Clearance coordination from New Zealand"},
-  {"@type":"Organization","@id":"https://sapspoliceclearance.com/#organization","name":"SAPS Police Clearance NZ","url":"https://sapspoliceclearance.com/","logo":{"@type":"ImageObject","url":"https://sapspoliceclearance.com/og-image.jpg"},"contactPoint":{"@type":"ContactPoint","telephone":"+64225658925","contactType":"customer service","availableLanguage":"English"},"sameAs":["https://g.page/em-services-nz"]},
-  {"@type":["LocalBusiness","ProfessionalService"],"@id":"https://sapspoliceclearance.com/#localbusiness","name":"SAPS Police Clearance NZ","url":"https://sapspoliceclearance.com/","telephone":"+64225658925","email":"elanza@sapspoliceclearance.com","address":{"@type":"PostalAddress","addressLocality":"Christchurch","addressRegion":"Canterbury","addressCountry":"NZ"},"geo":{"@type":"GeoCoordinates","latitude":"-43.532054","longitude":"172.636225"},"serviceType":"South African Police Clearance, Fingerprint Coordination","priceRange":"$$","openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"18:00"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"5","reviewCount":"47"},"hasOfferCatalog":{"@type":"OfferCatalog","name":"SAPS Clearance Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"SAPS Police Clearance Full Package","description":"Complete coordination of South African police clearance from New Zealand including fingerprint capture, documentation and SAPS submission"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Fingerprint Capture","description":"Certified fingerprint capture in Christchurch by Elanza Muller, certified fingerprint technician"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Document Preparation","description":"Preparation and verification of all required SAPS application documents"}}]}},
+  {"@type":"ImageObject","@id":"https://sapspoliceclearance.com/#logo","url":"https://sapspoliceclearance.com/og-image.jpg","contentUrl":"https://sapspoliceclearance.com/og-image.jpg","width":1200,"height":630,"caption":"SAPS Police Clearance NZ"},
+  {"@type":"Person","@id":"https://sapspoliceclearance.com/#elanza","name":"Elanza Muller","jobTitle":"Certified Fingerprint Technician","worksFor":{"@id":"https://sapspoliceclearance.com/#organization"},"url":"https://sapspoliceclearance.com/#about","image":{"@id":"https://sapspoliceclearance.com/#logo"},"knowsAbout":["South African Police Clearance Certificates","Fingerprint Capture","SAPS Application Coordination"]},
+  {"@type":"Organization","@id":"https://sapspoliceclearance.com/#organization","name":"SAPS Police Clearance NZ","url":"https://sapspoliceclearance.com/","logo":{"@id":"https://sapspoliceclearance.com/#logo"},"image":{"@id":"https://sapspoliceclearance.com/#logo"},"contactPoint":{"@type":"ContactPoint","telephone":"+64225658925","contactType":"customer service","availableLanguage":"English"},"employee":{"@id":"https://sapspoliceclearance.com/#elanza"},"sameAs":["https://g.page/r/sapspoliceclearancenz"]},
+  {"@type":["LocalBusiness","ProfessionalService"],"@id":"https://sapspoliceclearance.com/#localbusiness","name":"SAPS Police Clearance NZ","url":"https://sapspoliceclearance.com/","image":{"@id":"https://sapspoliceclearance.com/#logo"},"telephone":"+64225658925","email":"elanza@sapspoliceclearance.com","address":{"@type":"PostalAddress","addressLocality":"Christchurch","addressRegion":"Canterbury","addressCountry":"NZ"},"geo":{"@type":"GeoCoordinates","latitude":"-43.532054","longitude":"172.636225"},"serviceType":"South African Police Clearance, Fingerprint Coordination","priceRange":"$$","openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"18:00"},"employee":{"@id":"https://sapspoliceclearance.com/#elanza"},"sameAs":["https://g.page/r/sapspoliceclearancenz"],"aggregateRating":{"@type":"AggregateRating","ratingValue":"5","reviewCount":"47"},"hasOfferCatalog":{"@type":"OfferCatalog","name":"SAPS Clearance Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"SAPS Police Clearance Full Package","description":"Complete coordination of South African police clearance from New Zealand including fingerprint capture, documentation and SAPS submission"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Fingerprint Capture","description":"Certified fingerprint capture in Christchurch by Elanza Muller, certified fingerprint technician"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Document Preparation","description":"Preparation and verification of all required SAPS application documents"}}]}},
+  {"@type":"HowTo","@id":"https://sapspoliceclearance.com/#howto","name":"How to Get a South African Police Clearance Certificate from New Zealand","description":"The end-to-end process for obtaining a SAPS Police Clearance Certificate while living in New Zealand, coordinated by EM Services in Christchurch.","step":[
+    {"@type":"HowToStep","position":1,"name":"WhatsApp Elanza","text":"Get a checklist and quote within 1 business day."},
+    {"@type":"HowToStep","position":2,"name":"Fingerprint Capture","text":"Elanza captures your fingerprints personally as a certified technician."},
+    {"@type":"HowToStep","position":3,"name":"Document Preparation","text":"Forms are completed, verified and made submission-ready."},
+    {"@type":"HowToStep","position":4,"name":"SAPS Submission","text":"Your file is lodged directly with the South African Police Service."},
+    {"@type":"HowToStep","position":5,"name":"Certificate Delivered","text":"Your clearance certificate is delivered to you in New Zealand."}
+  ]},
   {"@type":"FAQPage","mainEntity":[
     {"@type":"Question","name":"How long does SA police clearance take from NZ?","acceptedAnswer":{"@type":"Answer","text":"Standard processing takes 6–10 weeks from SAPS submission. Fast-track preparation is available for urgent timelines — WhatsApp Elanza to discuss your deadline."}},
     {"@type":"Question","name":"Do I need to travel to South Africa?","acceptedAnswer":{"@type":"Answer","text":"No. Everything is coordinated from Christchurch. Fingerprints are captured by Elanza personally, and all documentation and submission is handled locally."}},
@@ -49,10 +58,11 @@
 ]}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 
 <!-- ═══════ FLOATING ACTION BUTTONS ═══════ -->
 <div class="floats">
@@ -127,6 +137,7 @@
   </div>
 </nav>
 
+<main id="main">
 <!-- ═══════════════════════════════════════
      HERO
 ═══════════════════════════════════════ -->
@@ -541,6 +552,8 @@
   </div>
 </section>
 
+</main>
+
 <!-- ═══════════════════════════════════════
      FOOTER
 ═══════════════════════════════════════ -->
@@ -609,6 +622,7 @@
     <div class="footer-bottom">
       <p>© 2025 sapspoliceclearance.com · Elanza Muller · EM Services · Certified by Forensic Insight Ltd · Christchurch, New Zealand</p>
       <p>Not affiliated with South African Police Service (SAPS) directly. An independent coordination service.</p>
+      <p><a href="/privacy-policy.html">Privacy Policy</a> · <a href="/terms-of-service.html">Terms of Service</a> · <a href="/sitemap.html">Sitemap</a></p>
     </div>
   </div>
 </footer>
