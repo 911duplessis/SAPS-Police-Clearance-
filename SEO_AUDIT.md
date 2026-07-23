@@ -193,3 +193,57 @@ Full validation: `scripts/seo_check.py` → 0 errors across all 20 pages (2 pre-
 | Secure `sapspoliceclearance.co.nz` (already recommended in the earlier competitor audit) | **Low-Medium** — defensive/brand, not urgent | Low (registration only, no dev work) |
 | PNG/ICO favicon fallback alongside the new `favicon.svg` | **Low** — cosmetic, older-browser only | Low (needs image tooling not available in this environment) |
 | Get Elanza to actually review new guide content, then add a genuine "reviewed by" byline | **Low direct SEO impact, meaningful EEAT** | Low effort, but needs her time, not mine |
+
+---
+---
+
+# Phase 3 — Indexing Focus: Glossary, Internal Linking Depth, Robots/Orphan Automation
+
+**Date:** 2026-07-23
+**Scope:** Per direction — deprioritise `iamstiaan` repo cleanup unless it's actively causing confusion (noted, not acted on this phase), and focus on Google's understanding of the already-built site: crawlability, internal linking depth, and stronger CI. Item 1 (per-URL redirect investigation) is **pending** — the 3 Search Console URLs haven't been provided yet; this phase covers items 2–5.
+
+## 1. CI status check
+
+Confirmed via the Actions API rather than assumed: the `seo-check` workflow ran and passed on both the Phase 2 pull request and the resulting push to `Index` (run IDs `29967666530` and `29967924559`, both `completed`/`success`). The validation pipeline is genuinely running, not just configured.
+
+**One gap I can't close myself**: there's no tool available in this session for repo-admin actions like branch protection, so I can't confirm or set up "require the seo-check status check to pass before merge." If that isn't already configured, it's a two-minute setting: repo **Settings → Branches → Branch protection rule → `Index` → Require status checks to pass → select `seo-check`**. Worth doing once, since it's exactly what turns "CI runs" into "CI actually gates merges."
+
+## 2. Fresh audit findings
+
+Going back through every category from the brief against the current merged state:
+
+- **Technical SEO / Crawlability / Indexation**: solid. Robots.txt, sitemap, canonicals all consistent (now with automated checks — see §4). No pagination, no hreflang needed (single language/region). No orphaned pages (verified, not assumed — see §4).
+- **EEAT**: Privacy/Terms/GBP consistency covered in Phase 2. The one item still outstanding is the same one flagged twice already — confirming the `aggregateRating`/review content against the live GBP — not something I can resolve from here.
+- **Structured Data / Rich Results**: `DefinedTermSet`/`DefinedTerm` added for the new glossary (the correct schema.org type for a glossary page, and a genuine rich-result candidate). Everything else from the original checklist (Organization, WebSite, LocalBusiness, Article, FAQPage, BreadcrumbList, HowTo, Person, ImageObject, CollectionPage, ItemList) was already in place after Phase 2.
+- **Core Web Vitals**: nothing new to fix without tooling this environment doesn't have (font subsetting) — already flagged in the Phase 2 backlog, unchanged.
+- **Internal Linking**: this was the real gap. The homepage's service cards (SAPS Police Clearance, Fingerprint Capture, Fast Track, Document Preparation, Multi-Purpose Clearance) had zero links into the deep guide content — a visitor reading the homepage had no path into the guides cluster except the nav bar. Fixed (see §3).
+- **Accessibility**: covered in Phase 2 (skip link, `<main>` landmarks, breadcrumb nav). No further gaps found that don't require a real browser-based tool (contrast-ratio auditing) this environment doesn't have.
+- **Conversion Optimisation**: CTA density and consistency were already strong; didn't force additional changes here — more CTAs isn't the lever right now, more findable content is.
+
+## 3. What shipped this phase
+
+| Change | Why |
+|---|---|
+| **`glossary.html`** — ~20-term glossary (PCC, SAPS, Criminal Record Centre, Apostille, DIRCO, biometric/ID terms, and UK/Australia/Canada immigration-authority terms), with `DefinedTermSet` schema | Ties the entire site together — nearly every term links to the guide that explains it in depth. Genuine "what does X mean" long-tail search intent nothing else on the site captured, and glossaries are a hallmark of sites Google treats as topically authoritative |
+| **`police-clearance-for-canada-immigration.html`** | Completes the UK/Australia/Canada trio using the same honest, informational-not-local-presence template — IRCC's police certificate requirement is real, common, and distinct from the UK/AU cases |
+| **Homepage service cards now link to their matching deep guide** (SAPS Police Clearance → what-is-a-PCC, Fingerprint Capture → fingerprint-requirements, Fast Track → how-long-does-it-take, Document Preparation → required-documents, Multi-Purpose Clearance → guides hub) | Closes the internal-linking gap found in §2 — this is the single highest-leverage crawl/authority-flow fix this phase, since the homepage is where all external authority lands first |
+| **Cross-links added**: UK ↔ Australia ↔ Canada guides now reference each other; what-is-a-PCC now links to the glossary | Denser topical mesh — each new page reinforces 2–3 existing ones and vice versa |
+| **`scripts/seo_check.py`: robots.txt validation** | Confirms `robots.txt` references the real `sitemap.xml` and doesn't accidentally `Disallow` any indexable page — a config typo here would be invisible without this |
+| **`scripts/seo_check.py`: orphan-page detection** | Builds the actual internal link graph from `index.html` and flags any indexable page a crawler can't reach by following links alone (not just via the sitemap) — directly caught the homepage-to-guides gap described in §2 before it was fixed, and will catch any future page that gets built but never linked |
+
+Full validation: `scripts/seo_check.py` → 0 errors across all 22 pages (same 2 pre-existing title-length warnings, unchanged, still deliberately left alone).
+
+## 4. Still pending — needs your input
+
+**Item 1, Search Console redirect investigation**: ready to go the moment you paste the 3 flagged URLs. Per-URL, I'll check: why Google reports it as a redirect, whether it should be a direct 200 instead, canonical tag, sitemap presence, internal links pointing at it, and whether the final destination is indexable — exactly as specified, root cause before any fix.
+
+## 5. Updated priority backlog
+
+| Recommendation | Impact | Effort |
+|---|---|---|
+| Confirm the 3 GSC redirect URLs | **High** — the one open Search Console item | Low (needs the 3 URLs) |
+| Enable "require seo-check to pass" branch protection on `Index` | **Medium-High** — turns passive CI into an actual merge gate, directly what was asked for | Low (repo Settings, 2 minutes) |
+| Verify the 47-review `aggregateRating` against the live GBP | **Medium** — EEAT accuracy | Low (a human glance) |
+| Add employment background-check guide, lost-certificate-style depth for remaining edge cases | **Low-Medium** | Medium |
+| Self-host fonts | **Medium** (CWV) | Medium-High (needs tooling not in this environment) |
+| `iamstiaan` duplicate cleanup | **Low priority per current direction** — revisit only if it starts causing workflow confusion | Low, whenever it's convenient |
