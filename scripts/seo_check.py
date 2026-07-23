@@ -22,6 +22,10 @@ the build). Checks performed:
   9. target="_blank" links carry rel="noopener" (tabnapping / SEO hygiene).
   10. No two indexable pages share an identical <title> or meta description
       (duplicate metadata dilutes ranking signals and confuses SERP snippets).
+  11. robots.txt exists, references the real sitemap.xml, and doesn't
+      Disallow any indexable page.
+  12. Every indexable page is reachable by following internal links
+      starting from index.html (no orphan pages a crawler can't discover).
 """
 import json
 import os
@@ -191,11 +195,81 @@ def check_duplicates():
             err(f"duplicate meta description used on: {', '.join(pages)}")
 
 
+def check_robots():
+    path = os.path.join(ROOT, "robots.txt")
+    if not os.path.exists(path):
+        err("robots.txt missing")
+        return
+    text = open(path, encoding="utf-8").read()
+
+    sitemap_line = next((l for l in text.splitlines() if l.strip().lower().startswith("sitemap:")), None)
+    if not sitemap_line:
+        err("robots.txt: no Sitemap: line")
+    elif sitemap_line.split(":", 1)[1].strip() != f"{DOMAIN}/sitemap.xml":
+        err(f"robots.txt: Sitemap line {sitemap_line!r} does not point at {DOMAIN}/sitemap.xml")
+
+    disallowed = [
+        l.split(":", 1)[1].strip()
+        for l in text.splitlines()
+        if l.strip().lower().startswith("disallow:") and l.split(":", 1)[1].strip()
+    ]
+    for name in html_files():
+        if name in NOINDEX_ALLOWED or name in SKIP_ENTIRELY:
+            continue
+        html = open(os.path.join(ROOT, name), encoding="utf-8").read()
+        robots_meta = get_meta(html, name="robots")
+        if robots_meta and "noindex" in robots_meta:
+            continue
+        for d in disallowed:
+            if d.rstrip("*") and (f"/{name}").startswith(d.rstrip("*")):
+                err(f"robots.txt: Disallow {d!r} blocks indexable page {name}")
+
+
+def check_orphans():
+    """Every indexable page should be reachable by following internal links
+    from index.html — otherwise a crawler relying on link discovery (rather
+    than only the sitemap) may never find it."""
+    graph = {}
+    for name in html_files():
+        if name in SKIP_ENTIRELY:
+            continue
+        html = open(os.path.join(ROOT, name), encoding="utf-8").read()
+        links = set()
+        for href in re.findall(r'href=["\'](/[a-zA-Z0-9_\-./]+\.html)(?:#[^"\']*)?["\']', html):
+            local = href.lstrip("/").split("#")[0]
+            if local:
+                links.add(local)
+        graph[name] = links
+
+    if "index.html" not in graph:
+        return
+    seen = {"index.html"}
+    queue = ["index.html"]
+    while queue:
+        cur = queue.pop()
+        for nxt in graph.get(cur, ()):
+            if nxt not in seen:
+                seen.add(nxt)
+                queue.append(nxt)
+
+    for name in html_files():
+        if name in NOINDEX_ALLOWED or name in SKIP_ENTIRELY:
+            continue
+        html = open(os.path.join(ROOT, name), encoding="utf-8").read()
+        robots_meta = get_meta(html, name="robots")
+        if robots_meta and "noindex" in robots_meta:
+            continue
+        if name not in seen:
+            err(f"{name}: orphan page — unreachable by internal links from index.html")
+
+
 def main():
     for name in html_files():
         check_page(name)
     check_sitemap()
     check_duplicates()
+    check_robots()
+    check_orphans()
 
     for w in warnings:
         print(f"WARN  {w}")
