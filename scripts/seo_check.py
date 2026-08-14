@@ -26,6 +26,18 @@ the build). Checks performed:
       Disallow any indexable page.
   12. Every indexable page is reachable by following internal links
       starting from index.html (no orphan pages a crawler can't discover).
+  13. Every external link resolves with a live HTTP request (warning-only —
+      a target site's outage shouldn't fail this required CI check).
+
+Deliberately NOT attempted: a keyword-cannibalization detector. Tried it --
+every reasonable title/H1 text heuristic either flags most of the site as
+false positives (nearly every page's title legitimately contains "SAPS
+Police Clearance" as its brand suffix) or misses the real cases entirely
+(the actual cannibalization found 14 Aug 2026 involved pages with no
+shared title text at all -- it only showed up in live Semrush ranking
+data). Real cannibalization detection needs a live rank-tracking feed
+(Search Console or Semrush position data), not static analysis of this
+repo. Don't add a fake version of this check just to tick the box.
 """
 import json
 import os
@@ -43,6 +55,7 @@ SKIP_ENTIRELY = {"google2bbf502f984c3743.html"}  # verification file, not a real
 
 errors = []
 warnings = []
+external_links = {}  # url -> [pages that link to it], populated by check_page()
 
 
 def err(msg):
@@ -143,6 +156,16 @@ def check_page(name):
         local = href.lstrip("/").split("#")[0]
         if local and not os.path.exists(os.path.join(ROOT, local)):
             err(f"{name}: broken internal link -> {href}")
+
+    # external links, collected here and checked once (deduplicated) in
+    # check_external_links() at the end of the run. Only real <a> links --
+    # not <link rel="preconnect">/stylesheet or <script src>, which point
+    # at bare origins or asset URLs that were never meant to be fetched as
+    # pages and will false-positive as "broken".
+    for a_tag in re.findall(r'<a\b[^>]*>', html):
+        href_m = re.search(r'href=["\'](https?://[^"\']+)["\']', a_tag)
+        if href_m and not href_m.group(1).startswith(DOMAIN):
+            external_links.setdefault(href_m.group(1), []).append(name)
 
 
 def check_sitemap():
@@ -263,6 +286,48 @@ def check_orphans():
             err(f"{name}: orphan page — unreachable by internal links from index.html")
 
 
+def check_external_links():
+    """Live HTTP check on every external link collected by check_page().
+
+    Deliberately warning-only, never error-level: this is a required CI
+    check gating merges, and a government site having a bad five minutes
+    shouldn't block an unrelated PR. Best-effort — network problems in the
+    CI environment itself (not the target site) are reported once and
+    skipped rather than spamming a warning per link.
+    """
+    import urllib.request
+    import urllib.error
+
+    if not external_links:
+        return
+
+    network_failures = 0
+    for url, pages in sorted(external_links.items()):
+        req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "Mozilla/5.0 (seo_check.py link checker)"})
+        try:
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                status = resp.status
+        except urllib.error.HTTPError as e:
+            status = e.code
+        except Exception:
+            # Some servers reject HEAD outright; retry with GET before giving up.
+            try:
+                req = urllib.request.Request(url, method="GET", headers={"User-Agent": "Mozilla/5.0 (seo_check.py link checker)"})
+                with urllib.request.urlopen(req, timeout=8) as resp:
+                    status = resp.status
+            except urllib.error.HTTPError as e:
+                status = e.code
+            except Exception:
+                network_failures += 1
+                if network_failures > 5:
+                    warn("external link check: too many network-level failures — CI environment may lack outbound access, skipping the rest")
+                    return
+                warn(f"external link unreachable (network error): {url} — linked from {', '.join(pages)}")
+                continue
+        if status >= 400:
+            warn(f"external link returned HTTP {status}: {url} — linked from {', '.join(pages)}")
+
+
 def main():
     for name in html_files():
         check_page(name)
@@ -270,6 +335,7 @@ def main():
     check_duplicates()
     check_robots()
     check_orphans()
+    check_external_links()
 
     for w in warnings:
         print(f"WARN  {w}")
